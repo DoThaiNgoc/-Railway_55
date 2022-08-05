@@ -90,16 +90,16 @@ CREATE TABLE `Group`
 -- THÊM DỮ LIỆU VÀO BẢNG `Group` :
 INSERT INTO `Group`		(GroupName,CreatorID,CreateDate)
 VALUES
-		(N'Testing System' , 5,'2019-03-05'),
-		(N'Development' , 1 ,'2020-03-07'),
-		(N'VTI Sale 01' , 2 ,'2020-03-09'),
-		(N'VTI Sale 02' , 3 ,'2020-03-10'),
-		(N'VTI Sale 03' , 4 ,'2020-03-28'),
-		(N'VTI Creator' , 6 ,'2020-04-06'),
-		(N'VTI Marketing 01' , 7 ,'2020-04-07'),
-		(N'Management' , 8 ,'2020-04-08'),
-		(N'Chat with love' , 9 ,'2020-04-09'),
-		(N'Vi Ti Ai' , 10 ,'2020-04-10');
+		('Testing System' , 5,'2019-03-05'),
+		('Development' , 1 ,'2020-03-07'),
+		('VTI Sale 01' , 2 ,'2020-03-09'),
+		('VTI Sale 02' , 3 ,'2020-03-10'),
+		('VTI Sale 03' , 4 ,'2020-03-28'),
+		('VTI Creator' , 6 ,'2020-04-06'),
+		('VTI Marketing 01' , 7 ,'2020-04-07'),
+		('Management' , 8 ,'2020-04-08'),
+		('Chat with love' , 9 ,'2020-04-09'),
+		('Vi Ti Ai' , 10 ,'2020-04-10');
 
 -- TẠO BẢNG TÊN : GroupAccount
 DROP TABLE IF EXISTS GroupAccount;
