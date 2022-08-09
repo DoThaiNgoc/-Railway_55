@@ -55,15 +55,37 @@ GROUP BY G.GroupID;
 SELECT P.PositionID, P.PositionName, count( A.PositionID) AS 'số người' FROM `account` A
 INNER JOIN position P ON A.PositionID = P.PositionID
 GROUP BY A.PositionID
-HAVING count(A.PositionID)= (SELECT MIN(minP) FROM(
-SELECT count(A.PositionID) AS minP FROM `account` A GROUP BY A.PositionID) AS minPosition);
+HAVING count(A.PositionID)= (SELECT MIN(minP) FROM
+(SELECT count(A.PositionID) AS minP FROM `account` A GROUP BY A.PositionID) AS minPosition);
 
+-- Question 11: Thống kê mỗi phòng ban có bao nhiêu dev, test, scrum master, PM
+SELECT D.DepartmentID,D.DepartmentName, P.PositionName, count(P.PositionName) FROM `account` A
+INNER JOIN department D ON A.DepartmentID = D.DepartmentID
+INNER JOIN `position` P ON A.PositionID = P.PositionID
+GROUP BY D.DepartmentID, P.PositionID; 
  
+-- Question 12: Lấy thông tin chi tiết của câu hỏi bao gồm: thông tin cơ bản của
+--  question, loại câu hỏi, ai là người tạo ra câu hỏi, câu trả lời là gì,
+SELECT Q.QuestionID, Q.Content, A.FullName, TQ.TypeName AS ATH, AnS.Content FROM question Q
+INNER JOIN categoryquestion CQ ON Q.CategoryID = CQ.CategoryID
+INNER JOIN typequestion TQ ON Q.TypeID = TQ.TypeID
+INNER JOIN `account` A ON A.AccountID = Q.CreatorID
+INNER JOIN Answer AnS  ON Q.QuestionID = AnS.QuestionID;
 
- 
- 
+-- Question 13: Lấy ra số lượng câu hỏi của mỗi loại tự luận hay trắc nghiệm
+SELECT TQ.TypeID, TQ.TypeName, COUNT(Q.TypeID) AS 'so luong' FROM question Q
+INNER JOIN typequestion TQ ON Q.TypeID = TQ.TypeID
+GROUP BY Q.TypeID;
 
+-- Question 14:Lấy ra group không có account nào
+SELECT * FROM `group` G
+LEFT JOIN GroupAccount GA ON g.GroupID = GA.GroupID
+WHERE GA.AccountID IS NULL;
 
+-- Question 15: Lấy ra group không có account nào
+SELECT * FROM GroupAccount GA
+RIGHT JOIN `group` G ON GA.GroupID = G.GroupID
+WHERE GA.AccountID IS NULL;
  
  
  
