@@ -44,6 +44,19 @@ GROUP BY Q.CategoryID;
  HAVING COUNT(A.QuestionID) = (SELECT MAX(CountAnwser) AS Maxanswer 
  FROM ( SELECT COUNT(A.QuestionID) AS CountAnwser FROM  Answer A 
 		GROUP BY A.QuestionID) AS maxAnswwerTable);
+        
+--   Question 9: Thống kê số lượng account trong mỗi group
+SELECT G.GroupID, COUNT(GA.AccountID) AS 'số lượng'
+FROM GroupAccount GA
+JOIN `Group` G ON GA.GroupID = G.GroupID
+GROUP BY G.GroupID;
+
+-- Question 10: Tìm chức vụ có ít người nhất
+SELECT P.PositionID, P.PositionName, count( A.PositionID) AS 'số người' FROM `account` A
+INNER JOIN position P ON A.PositionID = P.PositionID
+GROUP BY A.PositionID
+HAVING count(A.PositionID)= (SELECT MIN(minP) FROM(
+SELECT count(A.PositionID) AS minP FROM `account` A GROUP BY A.PositionID) AS minPosition);
 
  
 
