@@ -3,10 +3,11 @@ USE TestingSystem;
  -- Q1 LẤY RA DS NHÂN VIÊN VÀ THÔNG TIN PHÒNG BAN CỦA HỌ 
 SELECT  A.Email,A.Username,A.FullName,D.DepartmentName
 FROM `Account` A
-JOIN Department D ON A.DepartmentID = D.DepartmentID;
+INNER JOIN Department D ON A.DepartmentID = D.DepartmentID;
 
  -- Question 2: Viết lệnh để lấy ra thông tin các account được tạo sau ngày 20/12/2010 
- SELECT * FROM `Account` WHERE CreateDate > '2010-12-20';
+ SELECT * FROM `Account` 
+ WHERE CreateDate > '2010-12-20';
  
  -- Viết lệnh để lấy ra tất cả các developer
  SELECT A.Email, A.Username, A.Fullname, P.Positionname
@@ -18,7 +19,7 @@ JOIN Department D ON A.DepartmentID = D.DepartmentID;
  SELECT D.DepartmentName, COUNT(A.DepartmentID) FROM `Account` A
  INNER JOIN Department D ON  A.DepartmentID = D.DepartmentID
  GROUP BY A.DepartmentID
- HAVING COUNT(A.DepartmentID)>2;
+ HAVING COUNT(A.DepartmentID)>3;
  
  -- Question 5: Viết lệnh để lấy ra danh sách câu hỏi được sử dụng trong đề thi nhiều nhất
  SELECT Q.Content, COUNT(E.QuestionID) FROM ExamQuestion E
@@ -34,8 +35,8 @@ GROUP BY Q.CategoryID;
 
 -- Question 7: Thông kê mỗi Question được sử dụng trong bao nhiêu Exam
  SELECT Q.Content,Q.QuestionID, COUNT(E.QuestionID) AS examNumber FROM ExamQuestion E
- INNER JOIN Question Q ON Q.QuestionID = E.QuestionID
- GROUP BY E.QuestionID;
+ RIGHT JOIN Question Q ON Q.QuestionID = E.QuestionID
+ GROUP BY Q.QuestionID;
  
  -- Question 8: Lấy ra Question có nhiều câu trả lời nhất
  SELECT Q.Content,Q.QuestionID,count(A.QuestionID) AS AnswerNumber FROM Answer A
