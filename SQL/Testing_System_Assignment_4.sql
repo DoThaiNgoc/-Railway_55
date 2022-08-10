@@ -87,6 +87,55 @@ WHERE GA.AccountID IS NULL;
 SELECT * FROM GroupAccount GA
 RIGHT JOIN `group` G ON GA.GroupID = G.GroupID
 WHERE GA.AccountID IS NULL;
- 
- 
+-- Question 16: Lấy ra question không có answer nào
+SELECT Q.Content, Q.QuestionID, COUNT(ANS.QuestionID) AS Numbe_Answer FROM   Answer ANS
+RIGHT JOIN Question Q ON  Q.QuestionID = ANS.QuestionID
+GROUP BY Q.QuestionID
+HAVING COUNT(ANS.QuestionID) < 1;
+
+-- Question 17:
+				-- a) Lấy các account thuộc nhóm thứ 1
+				-- b) Lấy các account thuộc nhóm thứ 2
+				-- c) Ghép 2 kết quả từ câu a) và câu b) sao cho không có record nào trùng nhau
+SELECT A.FullName, GA.GroupID AS NHOM FROM `Account` A
+INNER JOIN  GroupAccount GA ON GA.AccountID = A.AccountID 
+WHERE GA.GroupID = 1;
+
+SELECT A.FullName, GA.GroupID AS NHOM FROM `Account` A
+INNER JOIN  GroupAccount GA ON GA.AccountID = A.AccountID 
+WHERE GA.GroupID = 2;
+
+SELECT A.FullName, GA.GroupID AS NHOM FROM `Account` A
+INNER JOIN  GroupAccount GA ON GA.AccountID = A.AccountID 
+WHERE GA.GroupID = 1
+UNION
+SELECT A.FullName, GA.GroupID AS NHOM FROM `Account` A
+INNER JOIN  GroupAccount GA ON GA.AccountID = A.AccountID 
+WHERE GA.GroupID = 2;
+
+-- Question 18:
+				-- a) Lấy các group có lớn hơn 5 thành viên
+				-- b) Lấy các group có nhỏ hơn 7 thành viên
+				-- c) Ghép 2 kết quả từ câu a) và câu b) 
+SELECT G.GroupName, COUNT(GA.GroupID) AS SO_LUONG FROM GroupAccount GA
+INNER JOIN `Group` G ON GA.GroupID = G.GroupID
+GROUP BY G.GroupName
+HAVING COUNT(GA.GroupID) >= 5;
+
+SELECT G.GroupName, COUNT(GA.GroupID) AS SO_LUONG FROM GroupAccount GA
+INNER JOIN `Group` G ON GA.GroupID = G.GroupID
+GROUP BY G.GroupName
+HAVING COUNT(GA.GroupID) <= 7;
+
+SELECT G.GroupName, COUNT(GA.GroupID) AS SO_LUONG FROM GroupAccount GA
+INNER JOIN `Group` G ON GA.GroupID = G.GroupID
+GROUP BY G.GroupName
+HAVING COUNT(GA.GroupID) >= 5
+UNION ALL
+SELECT G.GroupName, COUNT(GA.GroupID) AS SO_LUONG FROM GroupAccount GA
+INNER JOIN `Group` G ON GA.GroupID = G.GroupID
+GROUP BY G.GroupName
+HAVING COUNT(GA.GroupID) <= 7;
+
+
  
