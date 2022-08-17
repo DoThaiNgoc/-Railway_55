@@ -80,22 +80,48 @@ SELECT * FROM typequestion WHERE TypeID = @maxIDofQues;
 -- chuỗi của người dùng nhập vào
 DROP PROCEDURE IF EXISTS SP_GroupName_or_UseName;
 DELIMITER $$
-CREATE PROCEDURE SP_GroupName_or_UseName(IN GR_NAME VARCHAR(50), IN U_Name VARCHAR(50))
+CREATE PROCEDURE SP_GroupName_or_UseName(IN Gu_NAME VARCHAR(50))
 		BEGIN 
-        SELECT G.GroupName,A.Username FROM `Group` G
-        INNER JOIN `Account` A ON A.AccountID = G.CreatorID
-             WHERE G.GroupName=GR_NAME OR A.Username= U_Name;
+			SELECT G.GroupName FROM `Group` G
+			WHERE G.GroupName LIKE CONCAT("%",Gu_NAME,"%")
+			UNION
+			SELECT A.Username FROM `Account` A
+			WHERE A.Username LIKE CONCAT("%",Gu_NAME,"%");
         END$$
 DELIMITER ;
 
-CALL  SP_GroupName_or_UseName('Testing System', 'Username2');
+CALL  SP_GroupName_or_UseName('vt');
 
-SELECT * FROM SP_GroupName_or_UseName;
+-- Question 7: Viết 1 store cho phép người dùng nhập vào thông tin fullName, email và
+-- trong store sẽ tự động gán:
+-- username sẽ giống email nhưng bỏ phần @..mail đi
+-- positionID: sẽ có default là developer
+-- departmentID: sẽ được cho vào 1 phòng chờ
+-- Sau đó in ra kết quả tạo thành công
+DROP PROCEDURE IF EXISTS sp_insertAccount;
+DELIMITER $$
+CREATE PROCEDURE sp_insertAccount( IN var_Email VARCHAR(50), IN var_Fullname VARCHAR(50))
+	BEGIN
+		-- TẠO RA 1 BIẾN LƯU TRỮ VỚI DECLARE 
+		DECLARE var_Username VARCHAR(50) DEFAULT SUBSTRING_INDEX(var_Email, '@',1);
+		DECLARE var_DepartmentID TINYINT UNSIGNED DEFAULT 11;
+		DECLARE var_PositionID TINYINT UNSIGNED DEFAULT 1;
+		DECLARE var_CreateDate DATETIME DEFAULT now();
+		INSERT INTO `account` (Email, Username, FullName,DepartmentID, PositionID, CreateDate)
+		VALUES (var_Email, var_Username, var_Fullname, var_DepartmentID, var_PositionID, var_CreateDate);
+	END$$
+DELIMITER ;
+Call sp_insertAccount('daon@viettel.com.vn','Nguyen dao');
 
+SELECT * FROM `Account`;
 
+-- Question 8: Viết 1 store cho phép người dùng nhập vào Essay hoặc Multiple-Choice
+-- để thống kê câu hỏi essay hoặc multiple-choice nào có content dài nhất
+DROP PROCEDURE sp_getMaxLengthNameOfContent;
+DELIMITER $$
+CREATE PROCEDURE sp_getMaxLengthNameOfContent ( IN in_typeName VARCHAR(50))
+		BEGIN 
+			
 
-
-
-
-
+  
 
