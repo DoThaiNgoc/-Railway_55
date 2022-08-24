@@ -148,8 +148,66 @@ DELIMITER ;
 CALL sp_getMaxLengthNameOfContent('Multiple-Choice');
       				
 			
+-- Question 9: Viết 1 store cho phép người dùng xóa exam dựa vào ID
+DROP PROCEDURE IF EXISTS SP_DeleteExam;
+DELIMITER $$
+	CREATE PROCEDURE SP_DeleteExam (IN in_ExamID TINYINT UNSIGNED)
+	BEGIN
+		DELETE FROM Examquestion WHERE ExamID = in_ExamID;
+		DELETE FROM Exam WHERE ExamID = in_ExamID;
+	END$$
+DELIMITER ;
+CALL SP_DeleteExam(7);
+
+
+--   Question 11: Viết store cho phép người dùng xóa phòng ban bằng cách người dùng
+-- nhập vào tên phòng ban và các account thuộc phòng ban đó sẽ được
+-- chuyển về phòng ban default là phòng ban chờ việc
+DROP PROCEDURE IF EXISTS SP_DelDepName;
+DELIMITER $$
+	CREATE PROCEDURE SP_DelDepName(IN v_DepartmentName VARCHAR(30))
+	BEGIN
+		DECLARE v_DepartmentID VARCHAR(30) ;
+		SELECT D1.DepartmentID INTO v_DepartmentID FROM Department D1 WHERE D1.DepartmentName = v_DepartmentName;
+		UPDATE `account` A SET A.DepartmentID = '11' WHERE A.DepartmentID = v_DepartmentID;
+		DELETE FROM Department D WHERE D.DepartmentName = v_DepartmentName;
+	END$$
+DELIMITER ;
+Call SP_DelDepName('Marketing');
+
+-- Question 12: Viết store để in ra mỗi tháng có bao nhiêu câu hỏi được tạo trong năm
+-- nay.
+-- Các bước làm:
+-- - Sử dụng CTE tạo 1 bảng tạm CTE_12Months để lưu thông tin 12 tháng
+-- - Sử dụng JOIN kết hợp điều kiện ON là M.MONTH = month(Q.CreateDate), ở đây ON là
+-- 1 hàm của CreateDate
+
+DROP PROCEDURE IF EXISTS SP_CountQuesInMonth;
+DELIMITER $$
+	CREATE PROCEDURE sp_CountQuesInMonth()
+	BEGIN
+		WITH CTE_12Months AS (
+		SELECT 1 AS MONTH
+		UNION SELECT 2 AS MONTH
+		UNION SELECT 3 AS MONTH
+		UNION SELECT 4 AS MONTH
+		UNION SELECT 5 AS MONTH
+		UNION SELECT 6 AS MONTH
+		UNION SELECT 7 AS MONTH
+		UNION SELECT 8 AS MONTH
+		UNION SELECT 9 AS MONTH
+		UNION SELECT 10 AS MONTH
+		UNION SELECT 11 AS MONTH
+		UNION SELECT 12 AS MONTH
+		)
+		SELECT M.MONTH, count(month(Q.CreateDate)) AS SL FROM CTE_12Months M
+		LEFT JOIN (SELECT * FROM Question Q1 WHERE year(Q1.CreateDate) = year(now()) ) Q
+		ON M.MONTH = month(Q.CreateDate)
+		GROUP BY M.MONTH;
+	END$$
+DELIMITER ;
+Call sp_CountQuesInMonth();
 
 
 
-  
 
