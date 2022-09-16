@@ -1,3 +1,9 @@
+package entity;
+
+import entity.Account;
+import entity.CategoryQuestion;
+import java.time.LocalDate;
+
 public class Exam {
     public int id;
     public String code;

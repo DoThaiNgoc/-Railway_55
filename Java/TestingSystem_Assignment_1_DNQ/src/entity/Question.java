@@ -1,3 +1,7 @@
+package entity;
+
+import entity.Account;
+import java.time.LocalDate;
 public class Question {
     public int id;
     public String content;

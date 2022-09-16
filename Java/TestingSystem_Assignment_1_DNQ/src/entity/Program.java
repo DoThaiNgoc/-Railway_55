@@ -1,7 +1,16 @@
+package entity;
+
+import entity.Account;
+import entity.Department;
+import entity.Group;
+import entity.Position;
+import entity.Position.PositionName;
+import java.time.LocalDate;
+
 public class Program {
     public static void main(String[] args) {
 
-// Tạo Department
+// Tạo entity.Department
 
         Department dep1 = new Department();
         dep1.id = 1;
@@ -13,7 +22,7 @@ public class Program {
         dep3.id = 3;
         dep3.name = "BOD";
 
-// Tạo Position
+// Tạo entity.Position
 
         Position pos1 = new Position();
         pos1.id = 1;
@@ -25,7 +34,7 @@ public class Program {
         pos3.id = 3;
         pos3.name = PositionName.Scrum_Master;
 
-// Tạo Group
+// Tạo entity.Group
 
         Group group1 = new Group();
         group1.id = 1;
@@ -37,7 +46,7 @@ public class Program {
         group3.id = 3;
         group3.name = "Sale";
 
-// Tạo Account
+// Tạo entity.Account
 
         Account acc1 = new Account();
         acc1.id = 1;
@@ -66,40 +75,40 @@ public class Program {
         acc3.department = dep3;
         acc3.position = pos3;
         acc3.createDate = LocalDate.now();
-        System.out.println("Thông tin các Account trên hệ thống:");
-        System.out.println("Account 1: ID : " + acc1.id + " Email: " +
+        System.out.println("Thông tin các entity.Account trên hệ thống:");
+        System.out.println("entity.Account 1: ID : " + acc1.id + " Email: " +
 
                 acc1.email + " UserName: " + acc1.userName
 
-                + " FullName: " + acc1.fullName + " Department: " +
+                + " FullName: " + acc1.fullName + " entity.Department: " +
 
-                acc1.department.name + " Position: "
+                acc1.department.name + " entity.Position: "
 
-                + acc1.position.name + " Group: "+
+                + acc1.position.name + " entity.Group: "+
                 acc1.groups[0].name +" "+ acc1.groups[1].name + "CreateDate: " +
                 acc1.createDate);
 
-        System.out.println("Account 2: ID : " + acc2.id + " Email: " +
+        System.out.println("entity.Account 2: ID : " + acc2.id + " Email: " +
 
                 acc2.email + " UserName: " + acc2.userName
 
-                + " FullName: " + acc2.fullName + " Department: " +
+                + " FullName: " + acc2.fullName + " entity.Department: " +
 
-                acc2.department.name + " Position: "
+                acc2.department.name + " entity.Position: "
 
-                + acc2.position.name + " Group: "+
+                + acc2.position.name + " entity.Group: "+
                 acc2.groups[0].name +" "+ acc2.groups[1].name + "CreateDate: " +
                 acc2.createDate);
 
-        System.out.println("Account 3: ID : " + acc3.id + " Email: " +
+        System.out.println("entity.Account 3: ID : " + acc3.id + " Email: " +
 
                 acc3.email + " UserName: " + acc3.userName
 
-                + " FullName: " + acc3.fullName + " Department: " +
+                + " FullName: " + acc3.fullName + " entity.Department: " +
 
-                acc3.department.name + " Position: "
+                acc3.department.name + " entity.Position: "
 
-                + acc3.position.name + " Group: " + "CreateDate: " +
+                + acc3.position.name + " entity.Group: " + "CreateDate: " +
 
                 acc3.createDate);
     }

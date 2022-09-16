@@ -1,3 +1,8 @@
+package entity;
+
+import entity.Account;
+import java.time.LocalDate;
+
 public class Group {
     public int id;
     public String name;
